@@ -1,0 +1,10 @@
+{
+	"result":1,
+	"info":{
+		"column_name":["已激活设备","未激活设备"],
+		"column_data":[
+			{"value":"12","name":"已激活设备"},
+			{"value":"6","name":"未激活设备"}
+		]
+	}
+}

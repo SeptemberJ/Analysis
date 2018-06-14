@@ -1,0 +1,13 @@
+{
+	"result":1,
+	"info":{
+		"column_name":["Android","Iphone","华为","小米","魅族"],
+		"column_data":[
+			{"value":"22","name":"Android"},
+			{"value":"16","name":"Iphone"},
+			{"value":"5","name":"华为"},
+			{"value":"8","name":"小米"},
+			{"value":"2","name":"魅族"}
+		]
+	}
+}

@@ -1,0 +1,15 @@
+{
+  "result":1,
+  "info":{
+    "data":[
+      {"name": "01-26", "value": 0},
+      {"name": "01-27", "value": 0},
+      {"name": "01-28", "value": 0},
+      {"name": "01-29", "value": 0},
+      {"name": "01-30", "value": 0},
+      {"name": "01-31", "value": 7},
+      {"name": "02-01", "value": 9}
+    ]
+
+  }
+}

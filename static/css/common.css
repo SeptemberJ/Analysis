@@ -1,0 +1,263 @@
+*{padding: 0;margin: 0;}
+html,body{  
+    min-height: 100% !important;
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+ 
+}
+
+/**{ overflow-x: hidden; overflow-y: auto; }*/
+
+/*html {
+  font-family: sans-serif;
+  -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+}
+body{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+#app,.com-app{
+    min-height: 100% !important;  
+    margin: 0 auto;
+}*/
+
+/*@media only handheld{
+  body{width: 100%;background: yellow;}
+}*/
+#particlesLogin input{
+  color: #fff !important;
+}
+#particlesModify input{
+  color: #fff !important;
+}
+#particlesSign input{
+  color: #fff !important;
+}
+.shadow{
+  -webkit-box-shadow: 0 0 9px rgba(0,0,0,.25);
+  -moz-box-shadow: 0 0 9px rgba(0,0,0,.25);
+  box-shadow: 0 0 9px rgba(0,0,0,.25);
+}
+.AvatarIcon{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.BlockWrap{
+  width: 100%;
+  display: block;
+  float: left;
+  padding-top: 0px;  
+  padding-bottom: 0px; 
+  background-color: #fff;
+  border: 1px solid #eee;
+  -webkit-box-shadow: 0 0 5px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 0 5px rgba(0,0,0,.2);
+  box-shadow: 0 0 5px rgba(0,0,0,.2);
+}
+
+.transparentBg .ivu-input{
+  background-color: transparent !important;  
+}
+.transparentBg .ivu-input-group-prepend{
+  background-color: transparent !important;  
+}
+.transparentBg i{
+  color: #fff;  
+}
+.ivu-card-head{
+    border-bottom: 0px !important;
+}
+.ivu-form .ivu-form-item-label{
+    font-weight: bold !important;
+}
+
+.SmallBgBlock{
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    
+}
+/*@media (max-width: 768px){
+  *{
+    color: red;
+    font-size: 10px;
+  }
+}*/
+/*@media screen (min-width:320x) and (max-width:767px){
+  *{
+    color: red;
+    font-size: 12px;
+  }
+}*/
+.Ellipsis{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.wrap{
+  overflow-wrap: break-word;
+}
+.SmallImg{
+  width: 80px !important;
+  height: 80px !important;
+  display: inline-block;
+}
+.cursorPointer{
+  cursor: pointer;
+}
+.selfAdaptionWrap{
+    display: flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+}
+.fontSizeSmall{
+    font-size: 14px;
+}
+
+.active{
+  color: #39f;
+}
+.colorRed{
+    color: #ff150e;
+}
+.colorOrange{
+  color: #FF7800;
+}
+.colorLightBlack{
+    color: #6d7380;
+}
+.colorGray{
+  color: #989898;
+}
+.colorBlue{
+  color: #39f;
+}
+.colorWhite{
+  color: #fff !important;
+}
+.colorLightGray{
+  color: #eee;
+}
+
+.TextCenter{
+    text-align: center;
+}
+.TextRight{
+        text-align: right;
+}
+.TextLeft{
+        text-align: left;
+}
+.lightBlue{
+  background-color: #F3F8FE;
+}
+
+.ivu-menu-horizontal.ivu-menu-light:after{
+    height: 0px !important;
+}
+.marginT_10{
+    margin-top: 10px;
+}
+.marginL_10{
+    margin-left: 10px;
+}
+.marginT_20{
+    margin-top: 20px;
+}
+.marginTB_10{
+    margin: 10px auto;
+}
+.marginTB_20{
+    margin: 20px auto;
+}
+.marginL_20{
+    margin-left: : 20px;
+}
+.marginB_20{
+    margin-bottom: 20px;
+}
+.marginT_20{
+    margin-top: 20px;
+}
+.marginB_10{
+    margin-bottom: 10px;
+}
+.marginB_20{
+    margin-bottom: 20px;
+}
+.marginT_40{
+    margin-top: 40px;
+}
+.marginB_40{
+    margin-bottom: 40px;
+}
+.marginB_150{
+    margin-bottom: 150px;
+}
+.marginB_110{
+    margin-bottom: 110px;
+}
+.marginTB_40{
+    margin: 40px auto;
+}
+.marginL_20{
+    margin-left: 20px;
+}
+.marginL_10{
+    margin-left: 10px;
+}
+.marginR_10{
+    margin-right: 10px;
+}
+.fixWidthSpan_60{
+    width: 60px;
+    display: inline-block;
+
+}
+
+
+.PaddingTB_50{
+  padding: 50px 0;
+}
+.PaddingLR_10{
+  padding: 0 10px;
+}
+.PaddingLR_20{
+  padding: 0 20px;
+}
+.PaddingR_20{
+  padding-right: 20px;
+}
+.InlineBlock{
+  display: inline-block;
+}
+
+.FloatRight{
+  float: right;
+}
+
+.Border{
+  border: 1px solid #ddd;
+}
+
+.BgDarkBlue{
+  background-color: #068DFF !important;
+}
+.BgLightGreen{
+  background-color: #1AD3A8 !important;
+}
+.BgLightBlue{
+  background-color: #32B9FC !important;
+}
+.BgLightDarkGreen{
+  background-color: #81D125 !important;
+}
+.BgLightOrange{
+  background-color: #F18F48 !important;
+}
