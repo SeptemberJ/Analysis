@@ -6,6 +6,7 @@
             <Icon type="home" size="22"></Icon>
             首页
         </MenuItem>
+        <!--
         <Submenu name="账户管理">
             <template slot="title">
                 <Icon type="social-buffer" size="22"></Icon>
@@ -14,6 +15,7 @@
             <MenuItem name="个人账号">个人账号</MenuItem>
             <MenuItem name="企业信息">企业信息</MenuItem>
         </Submenu>
+        -->
         <MenuItem name="设备分析">
             <Icon type="email" size="22"></Icon>
             设备分析

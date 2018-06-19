@@ -1,6 +1,6 @@
 <template>
 <div class="layout">
-    <SideBar v-on:SideMenu-click=""  v-on:SideStatus=""/>
+    <SideBar v-on:SideMenu-click="listenFromSideMenu"  v-on:SideStatus="listenSideStatus"/>
     <Layout>
         <Content :style="{ minWidth: '1100px',marginLeft:LeftDistance?'0px':'200px'}">
             <Header class="shadow" :style="{position: 'fixed',top:0,left:LeftDistance?'0px':'200px', width: '100%',background:'#fff',zIndex:999,overflow:'hidden'}">
@@ -16,8 +16,8 @@
                 </div>
             </Header>
             <Card :bordered="false" dis-hover>
-                <div :style="{height:'1000px',marginTop:'50px',background:'purple'}">
-                   
+                <div :style="{height:'1000px',marginTop:'50px'}">
+                    <Home v-if="curMneu == '首页'"></Home>
                     
                 </div>
             </Card>
@@ -29,6 +29,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import SideBar from '../../components/sideBar.vue'
+import Home from '../../components/Home.vue'
  export default{
     data: function () {
       return {
@@ -37,16 +38,31 @@ import SideBar from '../../components/sideBar.vue'
       }
     },
     computed: {
+    	curMneu: {
+            get: function () {
+              return this.$store.state.OperatorMenuCur
+            },
+            set: function (newValue) {
+              this.$store.state.OperatorMenuCur = newValue
+            }
+        },
         
       
     },
     watch: {
     },
     components: {
-    	SideBar
+    	SideBar,
+    	Home
        
     },
     methods: {
+    	listenFromSideMenu(MENU){
+            this.curMneu = MENU
+        },
+        listenSideStatus(Status){
+            this.LeftDistance = Status
+        },
     	collapsedSider () {
             this.LeftDistance = !this.LeftDistance
             this.$children[0].$refs.side1.toggleCollapse();
@@ -58,6 +74,9 @@ import SideBar from '../../components/sideBar.vue'
 <style scoped>
 ::-webkit-scrollbar{
   display:none;
+}
+.ivu-card{
+	background: #efefef;
 }
 
 .ChangePlant{

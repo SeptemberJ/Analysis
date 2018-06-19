@@ -127,8 +127,29 @@ import {setCookie,getCookie,getCryptoJsCookie,Encrypt,Decrypt} from '../../util/
                 	'username':this.formLogin.phone,
                 	'password':this.formLogin.password
                 }
-                axios.post('http://205.168.1.112:8082/login',DATA2
+                axios.post('http://205.168.1.112/login.html',DATA2
                   ).then((res)=> {
+                    switch(res.data.result){
+                      case 1:
+                      let Encryption_name = CryptoJS.AES.encrypt(res.data.fname,this.$store.state.PlainText).toString()
+                      let Encryption_id = CryptoJS.AES.encrypt(res.data.ID,this.$store.state.PlainText).toString()
+                      let Encryption_type = CryptoJS.AES.encrypt(res.data.fstatus,this.$store.state.PlainText).toString()
+                      localStorage.setItem("BT_name",Encryption_name)
+                      localStorage.setItem("BT_id",Encryption_id)
+                      localStorage.setItem("BT_type",Encryption_type)
+                      this.$store.state.userInfo.username = Encryption_name
+                      this.$store.state.userInfo.userID = Encryption_id
+                      this.$store.state.userInfo.userType = Encryption_type
+                      setCookie('btznkz',Encrypt(cookieStr),6)
+                      this.$router.push({name:'图表'})
+                      break
+                      case 0:
+                      this.$Message.error('用户名或密码错误!')
+                      break
+                      default:
+                      this.$Message.error('系统繁忙!')
+                    }
+                    this.$store.state.IfLoading = false
                   }).catch((error)=> {
                     console.log(error)
                   })
@@ -175,6 +196,7 @@ import {setCookie,getCookie,getCryptoJsCookie,Encrypt,Decrypt} from '../../util/
       max-width: 500px;
       padding:20px 0;
       border-radius: 5px;
+      
       background: #fff;
       position: fixed;
       top: 50%;

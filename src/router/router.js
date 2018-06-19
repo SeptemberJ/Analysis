@@ -4,11 +4,7 @@ import axios from 'axios'
 import Store from '../store/store'
 import App from '../App'
 import Login from '../page/Login/Index'
-import Sign from '../page/Sign/Index'
-import Index from '../page/Index/Index'
-import Modify from '../page/Modify/Index'
-import Operator from '../page/Operator/Index'
-import Developer from '../page/Developer/Index'
+import Charts from '../page/Charts/charts'
 
 import {deviceInfo} from "../util/device"
 import {setCookie,getCookie} from '../util/utils'
@@ -21,12 +17,8 @@ const routes = [
     path: '/',
     component: App,
     children: [
-      {path: '/Index', name: '主页', component: Index},
-      {path: '/Modify', name: '修改密码', component: Modify},
+      {path: '/Charts', name: '图表', component: Charts},
       {path: '/Login', name: '登录', component: Login},
-      {path: '/Sign', name: '注册', component: Sign},
-      {path: '/Developer', name: '开发者平台', component: Developer,meta: {requireAuth: true}},
-      {path: '/Operator', name: '运营者平台', component: Operator,meta: {requireAuth: true}},
       {path:'*', redirect: '/Login'}
     ]
   }
@@ -46,10 +38,6 @@ router.beforeEach((to, from, next) => {
             next()
         }
         else {
-            // localStorage.clear();
-            // Store.state.userInfo.username = ''
-            // Store.state.userInfo.member_id = ''
-            // Store.state.ifLogined = false
             next({
                 path: '/Login',
             })
@@ -61,12 +49,10 @@ router.beforeEach((to, from, next) => {
 })
 //导航显示当前路由名称
 router.afterEach((to, from, next) => {
-  var ISMobile = deviceInfo()
+  //var ISMobile = deviceInfo()
   Store.state.activeRoute=to.name;
-  Store.state.isMobile=ISMobile;
+  //Store.state.isMobile=ISMobile;
   document.title = to.name;
   Store.commit('ROUTE_CHANGE',{activeRoute: to.name})
-  //获取消息通知
-  // MessageChange()
 })
 export default router

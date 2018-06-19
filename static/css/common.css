@@ -52,11 +52,13 @@ body{
   float: left;
   padding-top: 0px;  
   padding-bottom: 0px; 
+  /*
   background-color: #fff;
   border: 1px solid #eee;
   -webkit-box-shadow: 0 0 5px rgba(0,0,0,.2);
   -moz-box-shadow: 0 0 5px rgba(0,0,0,.2);
   box-shadow: 0 0 5px rgba(0,0,0,.2);
+  */
 }
 
 .transparentBg .ivu-input{

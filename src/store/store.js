@@ -9,43 +9,42 @@ import {setCookie,getCookie} from '../util/utils'
 Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
+  	MenuCur:'首页',
+
+
+
     PlainText:'柏田科技2018',
     IfLoading:false,  //mark loading
-    // token:localStorage.getItem("user_token"),//登录token
     userInfo:{
         username:localStorage.getItem("BT_name"),
         userID:localStorage.getItem("BT_id"),
         userType:localStorage.getItem("BT_type"),
-        //register_type:localStorage.getItem("register_type"),
-        // useravatar:localStorage.getItem("user_avatar"),
     },
-    //MessageCount:11,
-    OperatorMenuCur:'首页',
-    DeveloperMenuCur:'首页',
+    //OperatorMenuCur:'首页',
+    //DeveloperMenuCur:'首页',
     ifLogined:getCookie('btsby_cookie')?true : false,
-    // ifLogined:(localStorage.getItem("member_id"))?true : false,
     loading:false,
     activeRoute:'首页', //导航显示路由名字
-    step:2,
-    CurApplication:'',//当前应用
-    CurProduction:'',//当前产品
-    ProductionList:[],//应用集合
-    ApplicationList:[],//产品集合
-    M_CreateApplication:false,
-    M_CreateProduction:false,
-    M_CreateAgreement:false,
-    M_CreateWarning:false,
-    M_EditApplication:false,
-    M_EditProduction:false,
-    M_EditAgreement:false,
-    M_EditWarning:false,
-    M_SeeApplication:false,
-    M_SeeProduction:false,
-    M_SeeAgreement:false,
-    M_SeeWarning:false,
-    M_CreateMessage:false,
-    M_CreateProblem:false,
-    M_EditProblem:false,
+    //step:2,
+    //CurApplication:'',//当前应用
+    //CurProduction:'',//当前产品
+    //ProductionList:[],//应用集合
+    //ApplicationList:[],//产品集合
+    //M_CreateApplication:false,
+    //M_CreateProduction:false,
+    //M_CreateAgreement:false,
+    //M_CreateWarning:false,
+    //M_EditApplication:false,
+    //M_EditProduction:false,
+    //M_EditAgreement:false,
+    //M_EditWarning:false,
+    //M_SeeApplication:false,
+    //M_SeeProduction:false,
+    //M_SeeAgreement:false,
+    //M_SeeWarning:false,
+    //M_CreateMessage:false,
+    //M_CreateProblem:false,
+    //M_EditProblem:false,
 
     // newsKind:'1',
     // newsPage:1,
@@ -123,9 +122,6 @@ const store = new Vuex.Store({
       state.confirm.ifShow =! state.confirm.ifShow
       state.confirm.text = data.text
     },
-    // [types.CONFIRM_SUREFN](state,data){
-    //   // state.confirm.confirmSureFn = data.Fn
-    // },
     [types.CONFIRM](state,data){
       state.confirm.contentHtml = data.text
       state.confirm.confirmSureFn = data.fn
