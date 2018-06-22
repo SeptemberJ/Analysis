@@ -220,7 +220,7 @@ var schema = [
     	//this.GetData()
     	//this.websocket()
     	//this.ConnectFn()
-    	this.connect()
+    	this.ConnectFn()
 
 		//var ws = new SockJS('http://205.168.1.112:8082/login');
 	    //var client = Stomp.over(ws);
@@ -335,25 +335,23 @@ var schema = [
             })
         },
 
-        onConnected: function (frame) {
-	      console.log('Connected: ' + frame)
-	      var topic = '/topic/AllCustomer' 
-	      this.client.subscribe(topic, this.responseCallback, this.onFailed) 
+        ConnectFn(){
+        	var stompClient = null;
+        	var socket = new SockJS("http://205.168.1.112:8080/webSoket/endpointWisely"); 
+	        //链接SockJS 的endpoint 名称为"/endpointWisely"
+	        stompClient = Stomp.over(socket);//使用stomp子协议的WebSocket 客户端
+	        stompClient.connect({}, function(frame) {//链接Web Socket的服务端。
+	            //setConnected(true);
+	            console.log('Connected: ' + frame);
+	            stompClient.subscribe('/topic/getResponse', function(respnose){ //订阅/topic/getResponse 目标发送的消息。这个是在控制器的@SendTo中定义的。
+	            	console.log('返回---')
+	            	debugger
+	            	console.log(JSON.parse(respnose.body))
+	            	debugger
+	                //showResponse(JSON.parse(respnose.body).responseMessage);
+	            });
+	        });
 	    },
-	    onFailed: function (frame) {
-	      console.log('Failed: ' + frame)
-	    },
-	    responseCallback: function (frame) {
-	      console.log('responseCallback msg=>' + frame.body)
-	    },
-
-	    connect: function () {
-	      var headers = {
-	        'username': MQTT_USERNAME,
-	        'password': MQTT_PASSWORD,
-	      }
-	      this.client.connect(headers, this.onConnected, this.onFailed)
-	    }
         
 
     }
