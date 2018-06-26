@@ -12,6 +12,7 @@ import '../my-theme/dist/iview.css';
 import CryptoJS from 'crypto-js'
 import particles from 'particles.js'
 import echarts from 'echarts'
+import wordcloud from 'echarts-wordcloud'
 Vue.prototype.$echarts = echarts //将echarts注册成Vue的全局属性
 
 

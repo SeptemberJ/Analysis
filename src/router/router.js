@@ -5,7 +5,8 @@ import Store from '../store/store'
 import App from '../App'
 import Login from '../page/Login/Index'
 import Charts from '../page/Charts/charts'
-
+import Home from '../page/Home/Index'
+import Index from '../page/Index/Index'
 import {deviceInfo} from "../util/device"
 import {setCookie,getCookie} from '../util/utils'
 
@@ -19,6 +20,8 @@ const routes = [
     children: [
       {path: '/Charts', name: '图表', component: Charts},
       {path: '/Login', name: '登录', component: Login},
+      {path: '/Index', name: '主页', component: Index},
+      {path: '/Home', name: '首页', component: Home},
       {path:'*', redirect: '/Login'}
     ]
   }

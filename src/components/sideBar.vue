@@ -3,7 +3,7 @@
     <img :style="{width: '200px',height: '40px'}" src="static/img/logo.png">
     <Menu :active-name="ActiveName" theme="light" width="auto" accordion @on-select="SideMenuChange" :class="menuitemClasses">
         <MenuItem name="首页">
-            <Icon type="home" size="22"></Icon>
+            <Icon type="ios-analytics" size="22"></Icon>
             首页
         </MenuItem>
         <!--
@@ -17,11 +17,11 @@
         </Submenu>
         -->
         <MenuItem name="设备分析">
-            <Icon type="email" size="22"></Icon>
+            <Icon type="ios-monitor" size="22"></Icon>
             设备分析
         </MenuItem>
         <MenuItem name="用户分析">
-            <Icon type="help" size="22"></Icon>
+            <Icon type="ios-people" size="22"></Icon>
             用户分析
         </MenuItem>
     </Menu>

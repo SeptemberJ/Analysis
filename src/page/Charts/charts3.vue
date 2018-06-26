@@ -10,13 +10,12 @@ import Mock from 'mockjs'
 //import Stomp from 'stompjs'
 import { MQTT_SERVICE, MQTT_USERNAME, MQTT_PASSWORD } from '../../../config/sysconstant.js'
 var schema = [
-	{name: 'date', index: 0, text: '日期'},
-	{name: 'CO', index: 1, text: '一氧化碳（CO）'},
-    {name: 'CO2', index: 2, text: '二氧化碳（CO2）'},
-    {name: 'PM10', index: 3, text: 'PM10'},
-    {name: 'PM25', index: 4, text: 'PM25'},
+	{name: 'CO', index: 0, text: '一氧化碳（CO）'},
+    {name: 'CO2', index: 1, text: '二氧化碳（CO2）'},
+    {name: 'PM10', index: 2, text: 'PM10'},
+    {name: 'PM25', index: 3, text: 'PM25'},
     {name: 'VOCs', index: 5, text: 'VOCs'},
-    {name: 'PM252', index: 6, text: 'PM252'}
+    {name: 'level', index: 5, text: '空气质量'}
 ];
   export default{
     data: function () {
@@ -38,7 +37,7 @@ var schema = [
 			    },
 			    grid: {
 			        x: '10%',
-			        x2: 150,
+			        x2: 150,  //右侧tooltip距离
 			        y: '18%',
 			        y2: '10%'
 			    },
@@ -50,15 +49,14 @@ var schema = [
 			        formatter: function (obj) {
 			            var value = obj.value;
 			            return '<div style="border-bottom: 1px solid rgba(255,255,255,.3); font-size: 18px;padding-bottom: 7px;margin-bottom: 7px">'
-			                //+ obj.seriesName + ' ' + value[0] + '日：'
-			                //+ value[0]
+			                //+ obj.seriesName + ' ' + value[5] + '日：'
+			                + obj.seriesName + '日'
+			                + value[0]
 			                + '</div>'
-			                + schema[0].text + '：' + value[0] + '<br>'
 			                + schema[1].text + '：' + value[1] + '<br>'
 			                + schema[2].text + '：' + value[2] + '<br>'
 			                + schema[3].text + '：' + value[3] + '<br>'
 			                + schema[4].text + '：' + value[4] + '<br>'
-			                + schema[5].text + '：' + value[5] + '<br>'
 			        }
 			    },
 			    xAxis: {
@@ -101,14 +99,14 @@ var schema = [
 			         {
 			            left: 'right',
 			            top: '10%',
-			            dimension: 2,
+			            dimension: 2,    //圆点面积
 			            min: 0,
 			            max: 250,
-			            itemWidth: 30,
-			            itemHeight: 120,
+			            itemWidth: 30,	  //右侧tooltip宽度
+			            itemHeight: 120,  //右侧tooltip高度
 			            calculable: true,
 			            precision: 0.1,
-			            text: ['圆形大小：PM2.5'],
+			            text: ['圆形大小：PM10'],
 			            textGap: 30,
 			            textStyle: {
 			                color: '#fff'
@@ -137,8 +135,8 @@ var schema = [
 			            max: 50,
 			            itemHeight: 120,
 			            calculable: true,
-			            precision: 0.1,
-			            text: ['明暗：二氧化硫'],
+			            precision: 0.1,  //精度
+			            text: ['明暗：VOCs'],
 			            textGap: 30,
 			            textStyle: {
 			                color: '#fff'
@@ -177,7 +175,12 @@ var schema = [
 			        
 			    ]
 			},
-		//client: Stomp.client(MQTT_SERVICE)
+		arrayData: [
+				[1,155,9,56,0.46,18,46],
+			    [8,25,9,56,0.46,18,29],
+			    [13,299,47,63,0.3,23,9],
+			    [24,113,7,29,38,23,26]
+			]
         
 
       }
@@ -188,7 +191,8 @@ var schema = [
     },
     created() {
     	this.height = document.documentElement.clientHeight + 'px'
-    	this.ConnectFn()
+    	this.option.series[0].data = this.arrayData
+    	//this.ConnectFn()
 
       
       
@@ -222,6 +226,9 @@ var schema = [
     	drawLine(){
 			let myChart = this.$echarts.init(document.getElementById('myChart'))
 			myChart.setOption(this.option);
+			//0:x轴 1:y轴  3:原点半径
+			//高度依据：CO2
+
 			/*
 			setTimeout(function(){
 			    window.onresize = ()=>{
@@ -232,74 +239,6 @@ var schema = [
 			*/
 
     	},
-    	MockData(){
-    		axios.get('static/json/charts.json',
-			).then((res)=> {
-				var Index = Mock.mock({
-					'i|0-3': 1
-				})
-				this.option.series[0].data = res.data.Info[Index.i].PT
-				this.option.series[1].data = res.data.Info[Index.i].XH
-				this.option.series[2].data = res.data.Info[Index.i].MH
-				this.SetTimeoutOne()
-			}).catch((error)=> {
-				console.log(error)
-			})
-		},
-		SetTimeoutOne(){
-			setTimeout(()=> {
-				this.MockData()
-			}, 2000);
-		},
-    	GetData(){
-			axios.get('static/json/charts.json',
-			).then((res)=> {
-				this.option.series[0].data = res.data.Info[0].PT
-				this.option.series[1].data = res.data.Info[0].XH
-				this.option.series[2].data = res.data.Info[0].MH
-
-				this.SetTimeoutOne()
-
-			}).catch((error)=> {
-				console.log(error)
-			})
-    	},
-
-        ConnectFn(){
-        	let That = this
-        	var stompClient = null;
-        	var socket = new SockJS("http://205.168.1.112:8081/webSoket/endpointWisely"); 
-	        //链接SockJS 的endpoint 名称为"/endpointWisely"
-	        stompClient = Stomp.over(socket);//使用stomp子协议的WebSocket 客户端
-	        stompClient.connect({}, function(frame) {//链接Web Socket的服务端。
-	            //setConnected(true);
-	            //console.log('Connected: ' + frame);
-	            stompClient.subscribe('/topic/getResponse', function(respnose){ //订阅/topic/getResponse 目标发送的消息。这个是在控制器的@SendTo中定义的。
-	            	console.log('返回------------------------------------')
-	            	//debugger
-	            	//console.log(respnose.body)
-	            	let ResBody = JSON.parse(respnose.body)
-	            	let List = JSON.parse(ResBody.responseMessage)
-	            	let ComparedList = []
-	            	List.hkyList.map((item,idx)=>{
-	            		if(item.registermaid == '37-FF-D7-05-4D-4B-35-34-19-71-22-43'){
-	            			let TempObj = []
-	            			TempObj.push(idx + 1)
-	            			TempObj.push(item.CO)
-	            			TempObj.push(item.CO2)
-	            			TempObj.push(item.PM10)
-	            			TempObj.push(item.PM25)
-	            			TempObj.push(item.VOCs)
-	            			TempObj.push(item.PM25)
-	            			ComparedList.push(TempObj)
-	            		}
-	            	})
-	            	That.option.series[0].data = ComparedList
-
-	            	console.log(ComparedList)
-	            });
-	        });
-	    },
         
 
     }

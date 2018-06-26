@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<div id = "cloud" style="width: 1200px;height: 800px;"></div>
+<script type="text/javascript" src = "https://cdn.bootcss.com/echarts/3.6.2/echarts.min.js"></script>
+<script type="text/javascript" src = "./echarts-wordcloud.min.js"></script>
+    <script>
+
+//以下代码为自定义矢量图形字符云图
+var maskImage = new Image();
+//设置矢量图形的路径
+maskImage.src = "./img/message.png";
+
+//初始化云图对象
+var cloud = echarts.init(document.getElementById("cloud"));
+option = {
+title : {
+text : '拖欠行为企业'
+},
+tooltip : {
+show : true
+},
+
+toolbox:{show: true,orient: 'vertical',left: 'right',top: 'center',feature: {dataView: {readOnly: false},restore: {},saveAsImage: {}}},
+series : [ {
+type : 'wordCloud',
+sizeRange : [ 5, 20 ],
+rotationRange : [ -90, 90 ],
+rotationStep : 45,
+gridSize : 2,
+shape : 'pentagon',//云图的形状，有rect，triangle等
+maskImage : maskImage,//在自定义矢量图的时候才使用
+textStyle : {
+normal : {
+fontFamily : 'sans-serif',
+fontWeight : 'bold',
+// 颜色值可是是一个方法返回也可以是字符串值
+color : function() {
+return 'rgb('
++ [ Math.round(Math.random() * 160),
+Math.round(Math.random() * 160),
+Math.round(Math.random() * 160) ]
+.join(',') + ')';//生成随机颜色，textStyle也可以放在data中作为每一个数据对象使用
+}
+},
+emphasis : {
+shadowBlur : 10,
+shadowColor : '#333'
+}//鼠标悬停时的阴影显示
+},
+
+//该属性是最重要的数据显示部分，如果在页面中获得了动态数据要赋值给data的话需要定义一个数组保存动态数据，然后再将数组赋值给data，如：data:array
+data : [ {
+'name' : '佛山市南海区桂城玛丽莲甜品店',
+'value' : ''
+}, {
+'name' : '佛山市顺德区杏坛镇浩朗金属表面处理厂',
+'value' : ''
+}, {
+'name' : '佛山市鑫裕福不锈钢有限公司',
+'value' : ''
+}, {
+'name' : '佛山市顺德区北滘镇紫英花日用百货商店',
+'value' : ''
+} ]
+} ]
+};
+maskImage.onload = function() {
+option.series[0].maskImage;
+cloud.setOption(option);//生成云图
+};
+
+
+</script>
+</body>
+</html>
