@@ -18,7 +18,7 @@
                     </Input>
                 </FormItem>
                 <FormItem>
-                    <Button :style="{width:'100%'}" type="default" @click="handleSubmit('formLogin')">登录</Button>
+                    <Button :style="{width:'100%'}" type="default" @click="Test()">登录</Button>
                 </FormItem>
               </Col>
             </Row>
@@ -32,6 +32,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import echarts from 'echarts'
 import wordcloud from 'echarts-wordcloud'
+import $ from 'jquery'
 
 
 
@@ -520,7 +521,27 @@ export default{
 		          this.$Message.error('请输入用户名或密码!');
 		      }
 		  })
-		}
+		},
+		Test(){
+			let DATA = {
+		        	'username':'18234567890',
+		        	'password':'123'
+		        }
+			$.ajax({
+			    url: 'http://222.44.17.8:8085/znkzJK/login',
+			    data : DATA,
+		        dataType: 'json',
+		        type : 'POST',
+		        xhrFields: {
+		            withCredentials: true
+		        },
+		        crossDomain: true,
+		        contentType: "application/json",
+			　　success:function(data){
+			　　　　console.log(data)
+			　　}
+			});
+    	},
       
     }
   }

@@ -4,7 +4,7 @@ import axios from 'axios'
 import Store from '../store/store'
 import App from '../App'
 import Login from '../page/Login/Index'
-import Charts from '../page/Charts/charts'
+import Charts from '../page/Charts/charts2'
 import Home from '../page/Home/Index'
 import Index from '../page/Index/Index'
 import {deviceInfo} from "../util/device"

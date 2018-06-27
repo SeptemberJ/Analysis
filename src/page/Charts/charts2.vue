@@ -10,12 +10,13 @@ import Mock from 'mockjs'
 //import Stomp from 'stompjs'
 import { MQTT_SERVICE, MQTT_USERNAME, MQTT_PASSWORD } from '../../../config/sysconstant.js'
 var schema = [
-	{name: 'CO', index: 0, text: '一氧化碳（CO）'},
-    {name: 'CO2', index: 1, text: '二氧化碳（CO2）'},
-    {name: 'PM10', index: 2, text: 'PM10'},
-    {name: 'PM25', index: 3, text: 'PM25'},
+	{name: 'date', index: 0, text: '日期'},
+	{name: 'CO', index: 1, text: '一氧化碳（CO）'},
+    {name: 'CO2', index: 2, text: '二氧化碳（CO2）'},
+    {name: 'PM10', index: 3, text: 'PM10'},
+    {name: 'PM25', index: 4, text: 'PM25'},
     {name: 'VOCs', index: 5, text: 'VOCs'},
-    {name: 'faddtime', index: 5, text: '日期'}
+    {name: 'PM252', index: 6, text: 'PM252'}
 ];
   export default{
     data: function () {
@@ -29,7 +30,7 @@ var schema = [
 			    ],
 			    legend: {
 			        y: 'top',
-			        data: ['普陀区'],
+			        data: ['普陀区','徐汇区','闵行区'],
 			        textStyle: {
 			            color: '#fff',
 			            fontSize: 16
@@ -97,12 +98,12 @@ var schema = [
 			        }
 			    },
 			    visualMap: [
-			        {
+			         {
 			            left: 'right',
 			            top: '10%',
-			            dimension: 2,
+			            dimension: 6,
 			            min: 0,
-			            max: 250,
+			            max: 50,
 			            itemWidth: 30,
 			            itemHeight: 120,
 			            calculable: true,
@@ -128,35 +129,7 @@ var schema = [
 			                }
 			            }
 			        },
-			        {
-			            left: 'right',
-			            bottom: '5%',
-			            dimension: 6,
-			            min: 0,
-			            max: 50,
-			            itemHeight: 120,
-			            calculable: true,
-			            precision: 0.1,
-			            text: ['明暗：二氧化硫'],
-			            textGap: 30,
-			            textStyle: {
-			                color: '#fff'
-			            },
-			            inRange: {
-			                colorLightness: [1, 0.5]
-			            },
-			            outOfRange: {
-			                color: ['rgba(255,255,255,.2)']
-			            },
-			            controller: {
-			                inRange: {
-			                    color: ['#c23531']
-			                },
-			                outOfRange: {
-			                    color: ['#444']
-			                }
-			            }
-			        },
+			        /*
 			         {
 			            left: 'right',
 			            bottom: '5%',
@@ -186,6 +159,7 @@ var schema = [
 			                }
 			            }
 			        }
+			        */
 			    ],
 			    series: [
 			        {
@@ -201,11 +175,39 @@ var schema = [
 						    }
 						},
 			            data: []
+			        },
+			        {
+			            name: '徐汇区',
+			            type: 'scatter',
+			            itemStyle: {
+						    normal: {
+						        opacity: 0.8,
+						        shadowBlur: 10,
+						        shadowOffsetX: 0,
+						        shadowOffsetY: 0,
+						        shadowColor: 'rgba(0, 0, 0, 0.5)'
+						    }
+						},
+			            data: []
+			        },
+			        {
+			            name: '闵行区',
+			            type: 'scatter',
+			            itemStyle: {
+						    normal: {
+						        opacity: 0.8,
+						        shadowBlur: 10,
+						        shadowOffsetX: 0,
+						        shadowOffsetY: 0,
+						        shadowColor: 'rgba(0, 0, 0, 0.5)'
+						    }
+						},
+			            data: []
 			        }
 			        
 			    ]
 			},
-		client: Stomp.client(MQTT_SERVICE)
+		//client: Stomp.client(MQTT_SERVICE)
         
 
       }
@@ -216,7 +218,8 @@ var schema = [
     },
     created() {
     	this.height = document.documentElement.clientHeight + 'px'
-    	this.ConnectFn()
+    	//this.ConnectFn()
+    	this.GetData()
 
       
       
@@ -266,13 +269,9 @@ var schema = [
 				var Index = Mock.mock({
 					'i|0-3': 1
 				})
-				//debugger
 				this.option.series[0].data = res.data.Info[Index.i].PT
-				//debugger
 				this.option.series[1].data = res.data.Info[Index.i].XH
-				//debugger
 				this.option.series[2].data = res.data.Info[Index.i].MH
-				//debugger
 				this.SetTimeoutOne()
 			}).catch((error)=> {
 				console.log(error)
@@ -286,7 +285,6 @@ var schema = [
     	GetData(){
 			axios.get('static/json/charts.json',
 			).then((res)=> {
-				//debugger
 				this.option.series[0].data = res.data.Info[0].PT
 				this.option.series[1].data = res.data.Info[0].XH
 				this.option.series[2].data = res.data.Info[0].MH
@@ -315,23 +313,32 @@ var schema = [
 	            	let List = JSON.parse(ResBody.responseMessage)
 	            	let ComparedList = []
 	            	List.hkyList.map((item,idx)=>{
+	            		let TempObj = []
+	            		TempObj.push(idx + 1)
+            			TempObj.push(item.CO)
+            			TempObj.push(item.CO2)
+            			TempObj.push(item.PM10)
+            			TempObj.push(item.PM25)
+            			TempObj.push(item.VOCs)
+            			TempObj.push(item.PM25)
+            			ComparedList.push(TempObj)
+	            		/*
 	            		if(item.registermaid == '37-FF-D7-05-4D-4B-35-34-19-71-22-43'){
 	            			let TempObj = []
-	            			//TempObj.push(item.faddtime)
+	            			TempObj.push(idx + 1)
 	            			TempObj.push(item.CO)
 	            			TempObj.push(item.CO2)
 	            			TempObj.push(item.PM10)
 	            			TempObj.push(item.PM25)
 	            			TempObj.push(item.VOCs)
-	            			TempObj.push(item.faddtime)
+	            			TempObj.push(item.PM25)
 	            			ComparedList.push(TempObj)
 	            		}
+	            		*/
 	            	})
 	            	That.option.series[0].data = ComparedList
 
-	            	console.log(List.hkyList)
-	            	//debugger
-	                //showResponse(JSON.parse(respnose.body).responseMessage);
+	            	console.log(ComparedList)
 	            });
 	        });
 	    },

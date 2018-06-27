@@ -101,9 +101,9 @@ var schema = [
 			         {
 			            left: 'right',
 			            top: '10%',
-			            dimension: 2,
+			            dimension: 6,
 			            min: 0,
-			            max: 250,
+			            max: 50,
 			            itemWidth: 30,
 			            itemHeight: 120,
 			            calculable: true,
@@ -114,10 +114,10 @@ var schema = [
 			                color: '#fff'
 			            },
 			            inRange: {
-			                symbolSize: [10, 70]
+			                symbolSize: [10, 30]
 			            },
 			            outOfRange: {
-			                symbolSize: [10, 70],
+			                symbolSize: [10, 30],
 			                color: ['rgba(255,255,255,.2)']
 			            },
 			            controller: {
@@ -129,35 +129,6 @@ var schema = [
 			                }
 			            }
 			        },
-			         {
-			            left: 'right',
-			            bottom: '5%',
-			            dimension: 6,
-			            min: 0,
-			            max: 50,
-			            itemHeight: 120,
-			            calculable: true,
-			            precision: 0.1,
-			            text: ['明暗：二氧化硫'],
-			            textGap: 30,
-			            textStyle: {
-			                color: '#fff'
-			            },
-			            inRange: {
-			                colorLightness: [1, 0.5]
-			            },
-			            outOfRange: {
-			                color: ['rgba(255,255,255,.2)']
-			            },
-			            controller: {
-			                inRange: {
-			                    color: ['#c23531']
-			                },
-			                outOfRange: {
-			                    color: ['#444']
-			                }
-			            }
-			        }
 			    ],
 			    series: [
 			        {
@@ -282,6 +253,16 @@ var schema = [
 	            	let List = JSON.parse(ResBody.responseMessage)
 	            	let ComparedList = []
 	            	List.hkyList.map((item,idx)=>{
+	            		let TempObj = []
+	            		TempObj.push(idx + 1)
+            			TempObj.push(item.CO)
+            			TempObj.push(item.CO2)
+            			TempObj.push(item.PM10)
+            			TempObj.push(item.PM25)
+            			TempObj.push(item.VOCs)
+            			TempObj.push(item.PM25)
+            			ComparedList.push(TempObj)
+	            		/*
 	            		if(item.registermaid == '37-FF-D7-05-4D-4B-35-34-19-71-22-43'){
 	            			let TempObj = []
 	            			TempObj.push(idx + 1)
@@ -293,6 +274,7 @@ var schema = [
 	            			TempObj.push(item.PM25)
 	            			ComparedList.push(TempObj)
 	            		}
+	            		*/
 	            	})
 	            	That.option.series[0].data = ComparedList
 
